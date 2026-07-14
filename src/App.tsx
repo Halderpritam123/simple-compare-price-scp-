@@ -9,11 +9,12 @@ import "./index.css";
 interface Row {
   platform: string;
   company: string;
+  productName: string;
   rawQuantity: string;
   price: string;
 }
 
-const EMPTY_ROW = (): Row => ({ platform: "", company: "", rawQuantity: "", price: "" });
+const EMPTY_ROW = (): Row => ({ platform: "", company: "", productName: "", rawQuantity: "", price: "" });
 
 function App() {
   const [rows, setRows] = useState<Row[]>([EMPTY_ROW(), EMPTY_ROW()]);
@@ -52,6 +53,7 @@ function App() {
     const errors: string[] = [];
     filled.forEach((r, i) => {
       if (!r.platform.trim()) errors.push(`Row ${i + 1}: Platform is required.`);
+      if (!r.productName.trim()) errors.push(`Row ${i + 1}: Product name is required.`);
       if (!r.rawQuantity.trim()) errors.push(`Row ${i + 1}: Quantity is required.`);
       const p = parseFloat(r.price);
       if (isNaN(p) || p <= 0) errors.push(`Row ${i + 1}: Price must be a positive number.`);
@@ -66,6 +68,7 @@ function App() {
     const listings = filled.map((r) => ({
       platform: r.platform.trim(),
       company: r.company.trim(),
+      productName: r.productName.trim(),
       rawQuantity: r.rawQuantity.trim(),
       price: parseFloat(r.price),
     }));
@@ -104,6 +107,7 @@ function App() {
             {/* Header row */}
             <div className="grid-form__header">
               <span>Platform</span>
+              <span>Product</span>
               <span>Company <em>(optional)</em></span>
               <span>Quantity</span>
               <span>Price</span>
@@ -114,8 +118,11 @@ function App() {
             {rows.map((row, i) => {
               const qty = row.rawQuantity.trim();
               const qtyWarn = qty !== "" && normalize({
-                platform: row.platform, company: row.company,
-                rawQuantity: qty, price: 1,
+                platform: row.platform,
+                company: row.company,
+                productName: row.productName,
+                rawQuantity: qty,
+                price: 1,
               }).normalizationStatus === "unavailable";
 
               return (
@@ -126,6 +133,13 @@ function App() {
                     value={row.platform}
                     onChange={(e) => updateRow(i, "platform", e.target.value)}
                     aria-label={`Row ${i + 1} platform`}
+                  />
+                  <input
+                    className="grid-form__input"
+                    placeholder="e.g. Butter"
+                    value={row.productName}
+                    onChange={(e) => updateRow(i, "productName", e.target.value)}
+                    aria-label={`Row ${i + 1} product`}
                   />
                   <input
                     className="grid-form__input"

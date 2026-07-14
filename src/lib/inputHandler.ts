@@ -6,6 +6,8 @@ import type { RawListing } from "../types";
  */
 export interface ValidationErrors {
   platform?: string;
+  company?: string;
+  productName?: string;
   price?: string;
 }
 
@@ -32,6 +34,14 @@ export function validateListing(raw: RawListing): ValidationResult {
 
   if (!raw.platform || raw.platform.trim() === "") {
     errors.platform = "Platform is required.";
+  }
+
+  if (!raw.company || raw.company.trim() === "") {
+    errors.company = "Company is required.";
+  }
+
+  if (!raw.productName || raw.productName.trim() === "") {
+    errors.productName = "Product name is required.";
   }
 
   if (!isFinite(raw.price) || raw.price <= 0) {
