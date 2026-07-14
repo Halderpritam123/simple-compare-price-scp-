@@ -11,7 +11,6 @@ interface ListingFormProps {
 interface FormFields {
   platform: string;
   company: string;
-  productName: string;
   rawQuantity: string;
   price: string;
 }
@@ -19,7 +18,6 @@ interface FormFields {
 const EMPTY_FIELDS: FormFields = {
   platform: "",
   company: "",
-  productName: "",
   rawQuantity: "",
   price: "",
 };
@@ -51,7 +49,6 @@ export function ListingForm({ onAdd }: ListingFormProps) {
     const raw: RawListing = {
       platform: fields.platform,
       company: fields.company,
-      productName: fields.productName,
       rawQuantity: fields.rawQuantity,
       price: isNaN(priceNum) ? -1 : priceNum,
     };
@@ -93,14 +90,6 @@ export function ListingForm({ onAdd }: ListingFormProps) {
           value={fields.platform}
           error={errors.platform}
           placeholder="e.g. Blinkit"
-          onChange={handleChange}
-        />
-        <Field
-          id="lf-productName"
-          label="Product"
-          name="productName"
-          value={fields.productName}
-          placeholder="e.g. Butter"
           onChange={handleChange}
         />
         <Field

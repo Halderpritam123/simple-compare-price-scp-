@@ -15,8 +15,6 @@ export interface RawListing {
   platform: string;
   /** Manufacturer or brand, e.g. "Amul", "Nestlé" */
   company: string;
-  /** Product name as entered by the user, e.g. "Butter" */
-  productName: string;
   /** Quantity string as entered, e.g. "500g", "1kg", "200ml", "6 pack" */
   rawQuantity: string;
   /** Price in the user's currency */

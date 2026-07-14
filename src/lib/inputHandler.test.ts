@@ -6,7 +6,6 @@ import type { RawListing } from "../types";
 const validListing: RawListing = {
   platform: "Blinkit",
   company: "Amul",
-  productName: "Butter",
   rawQuantity: "500g",
   price: 55,
 };
@@ -66,24 +65,6 @@ describe("validateListing", () => {
     }
   });
 
-  // ── Product name validation ───────────────────────────────────────────────
-
-  it("rejects an empty productName string", () => {
-    const result = validateListing({ ...validListing, productName: "" });
-    expect(result.ok).toBe(false);
-    if (!result.ok) {
-      expect(result.errors.productName).toBeDefined();
-    }
-  });
-
-  it("rejects a whitespace-only productName string", () => {
-    const result = validateListing({ ...validListing, productName: "  \n  " });
-    expect(result.ok).toBe(false);
-    if (!result.ok) {
-      expect(result.errors.productName).toBeDefined();
-    }
-  });
-
   // ── Price validation ──────────────────────────────────────────────────────
 
   it("rejects a price of zero", () => {
@@ -118,7 +99,6 @@ describe("validateListing", () => {
     const result = validateListing({
       platform: "",
       company: "",
-      productName: "",
       rawQuantity: "",
       price: -5,
     });
@@ -126,7 +106,6 @@ describe("validateListing", () => {
     if (!result.ok) {
       expect(result.errors.platform).toBeDefined();
       expect(result.errors.company).toBeDefined();
-      expect(result.errors.productName).toBeDefined();
       expect(result.errors.price).toBeDefined();
     }
   });

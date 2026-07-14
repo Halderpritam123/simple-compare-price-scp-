@@ -7,7 +7,6 @@ import type { RawListing } from "../types";
 export interface ValidationErrors {
   platform?: string;
   company?: string;
-  productName?: string;
   price?: string;
 }
 
@@ -23,7 +22,6 @@ export type ValidationResult =
  * Validates a raw listing entered by the user.
  *
  * Rules (per Requirements 1.4 and 2.1):
- * - platform, company, and productName must not be empty or whitespace-only
  * - price must be a positive number (greater than zero)
  *
  * All failing fields are collected and returned together so the caller can
@@ -34,14 +32,6 @@ export function validateListing(raw: RawListing): ValidationResult {
 
   if (!raw.platform || raw.platform.trim() === "") {
     errors.platform = "Platform is required.";
-  }
-
-  if (!raw.company || raw.company.trim() === "") {
-    errors.company = "Company is required.";
-  }
-
-  if (!raw.productName || raw.productName.trim() === "") {
-    errors.productName = "Product name is required.";
   }
 
   if (!isFinite(raw.price) || raw.price <= 0) {
